@@ -11,5 +11,16 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.3.0"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValeryiaDomokurova/TestTask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ValeryiaDomokurova/TestTask/issues"
+  },
+  "homepage": "https://github.com/ValeryiaDomokurova/TestTask#readme"
 }
