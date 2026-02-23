@@ -4,7 +4,7 @@ export class DropPage extends BasePage {
   // selectos for tabs
   acceptTabId = '#droppableExample-tab-accept';
   preventTabId = '#droppableExample-tab-preventPropogation';
-  revertId = '#droppableExample-tab-revertable';
+  revertTabId = '#droppableExample-tab-revertable';
 
   // selectors for simple tab
   simpleDragId = '#draggable';
@@ -32,46 +32,73 @@ export class DropPage extends BasePage {
     await this.dragToTarget(this.simpleDragId, this.simpleDropId);
   }
 
+  async getSimpleDropText() {
+    return await this.page.locator(this.simpleDropId).first().textContent();
+  }
+
   // accept tab
-  async acceptDragAcceptable() {
+  async acceptGoToAcceptTab() {
     await this.goToTab(this.acceptTabId);
-    await this.dragToTarget(this.acceptAcceptableId, this.acceptDropId);
+    await this.page.waitForTimeout(1000);
   }
 
   async acceptDragNotAcceptable() {
-    await this.goToTab(this.acceptTabId);
-    await this.dragToTarget(this.acceptNotAcceptableId, this.acceptDropId);
+    const drag = this.page.locator(this.acceptNotAcceptableId).nth(2);
+    const drop = this.page.locator(this.acceptNotAcceptableId).nth(1);
+    await drag.dragTo(drop);
+  }
+
+  async acceptGetAcceptDropText() {
+    return await this.page.locator(this.acceptNotAcceptableId).nth(1).textContent();
   }
 
   // prevent propogation tab
-  async preventDragToOuterNotGreedy() {
+  async preventGoToPreventTab() {
     await this.goToTab(this.preventTabId);
+    await this.page.waitForTimeout(1000);
+  }
+
+  async preventDragToOuterNotGreedy() {
     await this.dragToTarget(this.preventDragId, this.preventOuterNotGreedyId);
   }
 
   async preventDragToInnerNotGreedy() {
-    await this.goToTab(this.preventTabId);
     await this.dragToTarget(this.preventDragId, this.preventInnerNotGreedyId);
   }
 
   async preventDragToOuterGreedy() {
-    await this.goToTab(this.preventTabId);
     await this.dragToTarget(this.preventDragId, this.preventOuterGreedyId);
   }
 
   async preventDragToInnerGreedy() {
-    await this.goToTab(this.preventTabId);
     await this.dragToTarget(this.preventDragId, this.preventInnerGreedyId);
   }
 
+  async getPreventDropText(selector) {
+    return await this.page.locator(selector).first().textContent();
+  }
+
   // revert draggable tab
+  async revertGoToRevertTab() {
+    await this.goToTab(this.revertTabId);
+    await this.page.waitForTimeout(1000);
+  }
+
   async revertDragWillRevert() {
-    await this.goToTab(this.revertId);
-    await this.dragToTarget(this.revertWillRevertId, this.revertDropId);
+    const drop = this.page.locator('#droppable').nth(1);
+    const drag = this.page.locator(this.revertWillRevertId).first();
+
+    await drag.dragTo(drop);
   }
 
   async revertDragNotRevert() {
-    await this.goToTab(this.revertId);
-    await this.dragToTarget(this.revertNotRevertId, this.revertDropId);
+    const drop = this.page.locator('#droppable').nth(1);
+    const drag = this.page.locator(this.revertNotRevertId).first();
+
+    await drag.dragTo(drop);
+  }
+
+  async revertGetRevertDropText() {
+    return await this.page.locator('#droppable').nth(1).textContent();
   }
 }
