@@ -6,7 +6,8 @@ The tests are written using **Playwright** and follow the **Page Object Model (P
 ---
 
 ## Project Structure
-
+---
+```
 TestTask/
 ├── pages/
 │ ├── base.page.js
@@ -18,7 +19,7 @@ TestTask/
 ├── playwright.config.js
 ├── package.json
 └── README.md
-
+```
 ---
 
 ## How to Run Tests
